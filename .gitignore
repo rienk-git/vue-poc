@@ -34,3 +34,6 @@ playwright-report/
 
 # history plugin
 .history
+
+# private data
+*/private/*

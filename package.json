@@ -12,9 +12,11 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "generate-types": "npx tsx scripts/typescript-generator.ts"
   },
   "dependencies": {
+    "@vueuse/core": "^10.11.0",
     "pinia": "^2.1.7",
     "vite-plugin-vuetify": "^2.0.3",
     "vue": "^3.4.29",
@@ -22,6 +24,7 @@
     "vuetify": "^3.6.13"
   },
   "devDependencies": {
+    "@pinia/testing": "^0.1.3",
     "@playwright/test": "^1.44.1",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
