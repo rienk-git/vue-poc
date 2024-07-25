@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useImdbStore } from '@/stores/features/imdb/imdb'
 import { setActivePinia, createPinia } from 'pinia'
 import { flushPromises } from '@vue/test-utils'
+import { ImdbApi } from './api'
 
 describe('Imdb Store', () => {
   beforeEach(() => {
@@ -13,15 +14,14 @@ describe('Imdb Store', () => {
 
   // debugging: https://vitest.dev/guide/debugging
 
-  it('should call search', async () => {
+  it('should trigger search', async () => {
     const searchString = 'test'
     const store = useImdbStore()
-    // const searchSpy = vi.spyOn(store, 'search')
+    const mock = vi.spyOn(ImdbApi.prototype, 'searchImdb')
     expect(store.searchString).toBe('')
     store.setSearchString(searchString)
     expect(store.searchString).toBe(searchString)
-    // doesn't work needs research
-    // await flushPromises()
-    // expect(searchSpy).toHaveBeenCalled()
+    await flushPromises()
+    expect(mock).toHaveBeenCalled()
   })
 })
