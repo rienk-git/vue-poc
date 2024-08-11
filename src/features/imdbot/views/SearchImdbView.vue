@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useImdbStore } from '@/stores/features/imdb/imdb'
-// import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+// import { storeToRefs } from 'pinia's
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { debounceFilter, watchWithFilter } from '@vueuse/core'
+import NestedList from '@/components/NestedList.vue'
+import { storeToRefs } from 'pinia'
 
 const store = useImdbStore()
 const searchString = ref(store.searchString)
@@ -23,6 +25,22 @@ const searchRules = [
   }
 ]
 
+const update = () => {
+  store.updateFirst()
+}
+
+// const res = store.resRef
+const { resRef } = storeToRefs(store)
+const test2 = store.theArrayRef
+
+store.setSomeNestedArray([{ key: 'a' }, { key: 'b' }])
+
+const test = computed(() => {
+  return searchString.value + 'lalala'
+})
+
+const test3 = store.someArray
+
 // this is nice but no easy debounce possible
 // const { searchString } = storeToRefs(store)
 
@@ -40,6 +58,10 @@ watchWithFilter(
 </script>
 
 <template>
+  {{ resRef }}
+  <button @click="update()">udata</button>
+  {{ test2 }}
+  {{ test3 }}
   <div class="text-input">
     <v-text-field
       v-model="searchString"
@@ -53,6 +75,7 @@ watchWithFilter(
   <small v-for="error in store.errors" :key="error">
     {{ error }}
   </small>
+  <div>{{ test }}</div>
   <v-skeleton-loader type="list-item@10" :loading="store.fetching" :height="300">
     <v-virtual-scroll :height="300" :items="store.resultList">
       <template v-slot:default="{ item }">
@@ -72,6 +95,8 @@ watchWithFilter(
       </template>
     </v-virtual-scroll>
   </v-skeleton-loader>
+
+  <NestedList :data="store.resultList"></NestedList>
 </template>
 
 <style>

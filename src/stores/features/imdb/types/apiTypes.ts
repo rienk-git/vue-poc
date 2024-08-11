@@ -54,6 +54,7 @@ export interface CombinedResult {
     Poster: string
   }[]
   totalResults?: string
+  testObject?: { [key: string]: string }
 }
 
 export type QueryParamsType = Record<string | number, any>
